@@ -133,7 +133,7 @@
         
         <section id="discovery">
             <h2>The Heart Resonance Discovery</h2>
-            <p>My research into mathematical patterns has led to a specific convergence of frequencies that interact with human physiology. This is the visualization of the 19Hz, 23Hz, and 3Hz pattern.</p>
+            <p>My research into mathematical patterns has led to a specific convergence of frequencies that interact with human physiology. This is the visualization of the 19Hz, 22Hz, and 3Hz pattern.</p>
             
             <div class="video-container">
                 <video controls>
@@ -151,7 +151,7 @@
                     <p>The Cognitive Pulse</p>
                 </div>
                 <div class="card">
-                    <span class="hz">23 Hz</span>
+                    <span class="hz">22 Hz</span>
                     <p>The Awareness Peak</p>
                 </div>
                 <div class="card">
