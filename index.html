@@ -69,7 +69,6 @@
             margin-bottom: 30px;
         }
 
-        /* Video Styling */
         .video-container {
             width: 100%;
             background: #000;
@@ -84,7 +83,6 @@
             display: block;
         }
 
-        /* Frequency Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -111,13 +109,35 @@
             font-weight: bold;
         }
 
-        /* Simulation Styling */
-        .sim-box {
+        /* Interactive Simulation Section */
+        .sim-section {
             background: #0b0f1a;
-            padding: 40px 20px;
-            border-radius: 8px;
-            margin-top: 50px;
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin: 50px 0;
             border: 1px solid #00d4ff;
+            text-align: center;
+        }
+
+        .controls {
+            margin: 30px auto;
+            max-width: 400px;
+            text-align: left;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input[type=range] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: #00d4ff;
+        }
+
+        #coherence {
+            color: #00d4ff;
+            font-size: 2.5rem;
+            font-weight: bold;
         }
 
         footer {
@@ -143,12 +163,11 @@
         
         <section id="discovery">
             <h2>The Heart Resonance Discovery</h2>
-            <p>My research into mathematical patterns has led to a specific convergence of frequencies that interact with human physiology. This is the visualization of the 19Hz, 22Hz, and 3Hz pattern.</p>
+            <p>Mathematical convergence of frequencies interacting with human physiology. Visualizing the 19Hz, 22Hz, and 3Hz pattern.</p>
             
             <div class="video-container">
                 <video controls>
                     <source src="resonance.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
             </div>
         </section>
@@ -171,17 +190,28 @@
             </div>
         </section>
 
+        <section id="simulation" class="sim-section">
+            <h2 style="color: #00d4ff;">Bio-Rhythm Interactive Simulation</h2>
+            <p>Adjust the sliders to observe frequency synchronization and system coherence.</p>
+            
+            <div class="controls">
+                <label>Heart Rate (Hz): <span id="heartVal">1.2</span></label>
+                <input type="range" min="0.5" max="2" step="0.1" value="1.2" id="heartSlider">
+                
+                <label>Breathing Rate (Hz): <span id="breathVal">0.25</span></label>
+                <input type="range" min="0.1" max="0.5" step="0.05" value="0.25" id="breathSlider">
+                
+                <label>Brain Frequency (Hz): <span id="brainVal">10</span></label>
+                <input type="range" min="5" max="20" step="1" value="10" id="brainSlider">
+            </div>
+
+            <h3>Coherence Score: <span id="coherence">0</span>%</h3>
+            <canvas id="chart"></canvas>
+        </section>
+
         <section id="philosophy">
             <h2>On Duality</h2>
             <p>Everything in the universe is a byproduct of vibration. To create light is to define the boundaries of the dark. My work explores how these mathematical constants shape our perception of reality.</p>
-        </section>
-
-        <section id="simulation">
-            <div class="sim-box">
-                <h2 style="color: #00d4ff; text-align: center;">Human Bio-Rhythm Simulation</h2>
-                <p style="text-align: center;">Heart • Breath • Brain • Combined System</p>
-                <canvas id="chart"></canvas>
-            </div>
         </section>
 
     </div>
@@ -191,52 +221,82 @@
     </footer>
 
     <script>
-    const t = [];
-    const heart = [];
-    const breath = [];
-    const brain = [];
-    const combined = [];
+    const ctx = document.getElementById('chart');
+    let chart;
 
-    const heartFreq = 1.2;
-    const breathFreq = 0.25;
-    const brainFreq = 10;
+    function generateData(heartFreq, breathFreq, brainFreq) {
+      const t = [];
+      const heart = [];
+      const breath = [];
+      const brain = [];
+      const combined = [];
 
-    for (let i = 0; i < 1000; i++) {
-      let time = i * 0.06;
-      t.push(time);
+      for (let i = 0; i < 500; i++) {
+        let time = i * 0.05;
+        t.push(time);
 
-      let breathSignal = 0.5 * Math.sin(2 * Math.PI * breathFreq * time);
-      let heartSignal = Math.sin(2 * Math.PI * heartFreq * time + 0.5 * breathSignal);
-      let brainSignal = 0.3 * Math.sin(2 * Math.PI * brainFreq * time);
+        let breathSignal = 0.5 * Math.sin(2 * Math.PI * breathFreq * time);
+        let heartSignal = Math.sin(2 * Math.PI * heartFreq * time + 0.5 * breathSignal);
+        let brainSignal = 0.3 * Math.sin(2 * Math.PI * brainFreq * time);
 
-      heart.push(heartSignal);
-      breath.push(breathSignal);
-      brain.push(brainSignal);
-      combined.push(heartSignal + breathSignal + brainSignal);
+        heart.push(heartSignal);
+        breath.push(breathSignal);
+        brain.push(brainSignal);
+        combined.push(heartSignal + breathSignal + brainSignal);
+      }
+
+      let sum = 0;
+      for (let i = 0; i < heart.length; i++) {
+        sum += heart[i] * breath[i];
+      }
+      let coherence = Math.abs(sum / heart.length) * 100;
+      document.getElementById('coherence').innerText = coherence.toFixed(1);
+
+      return { t, heart, breath, brain, combined };
     }
 
-    new Chart(document.getElementById('chart'), {
-      type: 'line',
-      data: {
-        labels: t,
-        datasets: [
-          { label: 'Heart', data: heart, borderColor: '#ff4b2b', borderWidth: 1, pointRadius: 0 },
-          { label: 'Breath', data: breath, borderColor: '#00d4ff', borderWidth: 1, pointRadius: 0 },
-          { label: 'Brain', data: brain, borderColor: '#f9d423', borderWidth: 1, pointRadius: 0 },
-          { label: 'Combined', data: combined, borderColor: '#ffffff', borderWidth: 2, pointRadius: 0 }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: { display: false },
-          y: { display: true, grid: { color: '#333' } }
+    function updateChart() {
+      const heartFreq = parseFloat(document.getElementById('heartSlider').value);
+      const breathFreq = parseFloat(document.getElementById('breathSlider').value);
+      const brainFreq = parseFloat(document.getElementById('brainSlider').value);
+
+      document.getElementById('heartVal').innerText = heartFreq;
+      document.getElementById('breathVal').innerText = breathFreq;
+      document.getElementById('brainVal').innerText = brainFreq;
+
+      const data = generateData(heartFreq, breathFreq, brainFreq);
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.t,
+          datasets: [
+            { label: 'Heart', data: data.heart, borderColor: '#ff4b2b', borderWidth: 1, pointRadius: 0 },
+            { label: 'Breath', data: data.breath, borderColor: '#00d4ff', borderWidth: 1, pointRadius: 0 },
+            { label: 'Brain', data: data.brain, borderColor: '#f9d423', borderWidth: 1, pointRadius: 0 },
+            { label: 'Combined', data: data.combined, borderColor: '#ffffff', borderWidth: 2, pointRadius: 0 }
+          ]
         },
-        plugins: {
-          legend: { labels: { color: 'white' } }
+        options: {
+          responsive: true,
+          scales: {
+            x: { display: false },
+            y: { display: true, grid: { color: '#333' } }
+          },
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          }
         }
-      }
+      });
+    }
+
+    ['heartSlider','breathSlider','brainSlider'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateChart);
     });
+
+    updateChart();
     </script>
 </body>
 </html>
