@@ -21,7 +21,6 @@
             padding: 20px;
         }
 
-        /* Hero Section */
         header {
             height: 100vh;
             display: flex;
@@ -55,7 +54,6 @@
             margin-top: 20px;
         }
 
-        /* Content Sections */
         section {
             padding: 100px 0;
             border-bottom: 1px solid #222;
@@ -109,36 +107,16 @@
             font-weight: bold;
         }
 
-        /* Interactive Simulation Section */
-        .sim-section {
-            background: #0b0f1a;
-            padding: 50px 20px;
-            border-radius: 12px;
-            margin: 50px 0;
-            border: 1px solid #00d4ff;
-            text-align: center;
+        /* Simulation Controls Styling */
+        .controls { 
+            margin: 20px auto; 
+            background: #111; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: 1px solid #333;
         }
-
-        .controls {
-            margin: 30px auto;
-            max-width: 400px;
-            text-align: left;
-            background: #161b22;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        input[type=range] {
-            width: 100%;
-            margin: 10px 0;
-            accent-color: #00d4ff;
-        }
-
-        #coherence {
-            color: #00d4ff;
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
+        input { width: 100%; max-width: 300px; accent-color: #ff5722; }
+        #coherence { color: #ff5722; font-weight: bold; font-size: 2rem; }
 
         footer {
             text-align: center;
@@ -163,11 +141,12 @@
         
         <section id="discovery">
             <h2>The Heart Resonance Discovery</h2>
-            <p>Mathematical convergence of frequencies interacting with human physiology. Visualizing the 19Hz, 22Hz, and 3Hz pattern.</p>
+            <p>My research into mathematical patterns has led to a specific convergence of frequencies that interact with human physiology. This is the visualization of the 19Hz, 22Hz, and 3Hz pattern.</p>
             
             <div class="video-container">
                 <video controls>
                     <source src="resonance.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
                 </video>
             </div>
         </section>
@@ -190,31 +169,30 @@
             </div>
         </section>
 
-        <section id="simulation" class="sim-section">
-            <h2 style="color: #00d4ff;">Bio-Rhythm Interactive Simulation</h2>
-            <p>Adjust the sliders to observe frequency synchronization and system coherence.</p>
-            
-            <div class="controls">
-                <label>Heart Rate (Hz): <span id="heartVal">1.2</span></label>
-                <input type="range" min="0.5" max="2" step="0.1" value="1.2" id="heartSlider">
-                
-                <label>Breathing Rate (Hz): <span id="breathVal">0.25</span></label>
-                <input type="range" min="0.1" max="0.5" step="0.05" value="0.25" id="breathSlider">
-                
-                <label>Brain Frequency (Hz): <span id="brainVal">10</span></label>
-                <input type="range" min="5" max="20" step="1" value="10" id="brainSlider">
-            </div>
-
-            <h3>Coherence Score: <span id="coherence">0</span>%</h3>
-            <canvas id="chart"></canvas>
-        </section>
-
         <section id="philosophy">
             <h2>On Duality</h2>
             <p>Everything in the universe is a byproduct of vibration. To create light is to define the boundaries of the dark. My work explores how these mathematical constants shape our perception of reality.</p>
         </section>
 
-    </div>
+        <section id="simulation" style="text-align: center;">
+            <h2 style="color: #00d4ff;">Human Bio-Rhythm Simulation</h2>
+            <p>Heart • Breath • Brain • Combined System</p>
+            
+            <div class="controls">
+                <label>Heart Rate (Hz): <span id="heartVal">1.2</span></label><br>
+                <input type="range" min="0.5" max="2" step="0.1" value="1.2" id="heartSlider"><br><br>
+                
+                <label>Breathing Rate (Hz): <span id="breathVal">0.25</span></label><br> 
+                <input type="range" min="0.1" max="0.5" step="0.05" value="0.25" id="breathSlider"><br><br>
+
+                <label>Brain Frequency (Hz): <span id="brainVal">10</span></label><br> 
+                <input type="range" min="5" max="20" step="1" value="10" id="brainSlider"><br>
+            </div>
+
+            <h2>Coherence Score: <span id="coherence">0</span>%</h2>
+            <canvas id="chart" style="background: #000; border-radius: 8px; padding: 10px;"></canvas>
+        </section>
+        </div>
 
     <footer>
         &copy; 2026 Mark J Azzopardi. All rights reserved.
@@ -245,6 +223,7 @@
         combined.push(heartSignal + breathSignal + brainSignal);
       }
 
+      // Simple coherence: correlation between heart & breath
       let sum = 0;
       for (let i = 0; i < heart.length; i++) {
         sum += heart[i] * breath[i];
@@ -283,7 +262,7 @@
           responsive: true,
           scales: {
             x: { display: false },
-            y: { display: true, grid: { color: '#333' } }
+            y: { display: true, grid: { color: '#222' } }
           },
           plugins: {
             legend: { labels: { color: 'white' } }
@@ -298,5 +277,6 @@
 
     updateChart();
     </script>
+
 </body>
 </html>
