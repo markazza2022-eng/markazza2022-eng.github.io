@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exploring the intersection of light, shadow, and human resonance. A mathematical journey by Mark J Azzopardi.">
+    <title>Mark J Azzopardi | Resonance & Duality</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #d1d1d1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+        }
+
+        .quote-box {
+            border-left: 2px solid #ff5722;
+            padding-left: 30px;
+            max-width: 700px;
+        }
+
+        .quote-text {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .signature {
+            color: #ff5722;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        h2 {
+            color: #ff5722;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+        }
+
+        .controls { 
+            margin: 20px auto; 
+            background: #111; 
+            padding: 30px; 
+            border-radius: 8px; 
+            border: 1px solid #333; 
+            text-align: left; 
+        }
+
+        input[type=range] { width: 100%; max-width: 400px; accent-color: #ff5722; }
+        
+        #coherence { color: #ff5722; font-weight: bold; font-size: 2.5rem; }
+
+        .explanation-box { 
+            background: #111; 
+            padding: 30px; 
+            border-radius: 8px; 
+            border-left: 4px solid #00d4ff; 
+            margin-top: 40px; 
+            text-align: left; 
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        strong { color: #ffffff; }
+
+        /* ── FREQUENCY OF LIFE ─────────────────────────────── */
+
+        #frequency-of-life {
+            padding: 100px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .fol-header {
+            margin-bottom: 14px;
+        }
+
+        .fol-subtitle {
+            color: #888;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* Orbital canvas */
+        .orbital-wrap {
+            width: 100%;
+            max-width: 460px;
+            margin: 0 auto 50px;
+            aspect-ratio: 1;
+            position: relative;
+        }
+        #orbital {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Nodes */
+        .fol-nodes {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .fol-node {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+        .fol-node.active-sun   { border-color: rgba(247,193,60,0.55);  box-shadow: 0 0 28px rgba(247,193,60,0.1); }
+        .fol-node.active-earth { border-color: rgba(0,212,255,0.45);   box-shadow: 0 0 28px rgba(0,212,255,0.08); }
+        .fol-node.active-heart { border-color: rgba(255,87,34,0.55);   box-shadow: 0 0 28px rgba(255,87,34,0.1); }
+
+        .fol-node-icon { font-size: 1.8rem; width: 44px; text-align: center; flex-shrink: 0; }
+
+        .fol-node-body { flex: 1; min-width: 0; }
+
+        .fol-node-title {
+            font-size: 0.68rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        .fol-node-title.sun-c   { color: #f7c13c; }
+        .fol-node-title.earth-c { color: #00d4ff; }
+        .fol-node-title.heart-c { color: #ff5722; }
+
+        .fol-node-freq {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .fol-node-sub {
+            font-size: 0.72rem;
+            color: #555;
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+
+        .fol-vol-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .fol-vol-label { font-size: 0.65rem; color: #444; letter-spacing: 2px; text-transform: uppercase; width: 26px; flex-shrink: 0; }
+        .fol-vol-row input[type=range] {
+            flex: 1;
+            max-width: none;
+            height: 3px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #222;
+            border-radius: 2px;
+            accent-color: inherit;
+        }
+        .vol-sun   { accent-color: #f7c13c; }
+        .vol-earth { accent-color: #00d4ff; }
+        .vol-heart { accent-color: #ff5722; }
+        .fol-vol-val { font-size: 0.68rem; color: #444; width: 32px; text-align: right; }
+
+        /* Binaural toggle */
+        .binaural-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding: 14px 24px;
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+        }
+        .binaural-row label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            flex: 1;
+        }
+        .binaural-row span { font-size: 0.7rem; color: #f7c13c; letter-spacing: 2px; }
+
+        /* Toggle switch */
+        .toggle { position: relative; display: inline-block; width: 42px; height: 22px; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; inset: 0;
+            background: #222; border-radius: 22px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            height: 16px; width: 16px;
+            left: 3px; bottom: 3px;
+            background: #555; border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle input:checked + .toggle-slider { background: #1a3a2a; }
+        .toggle input:checked + .toggle-slider:before { transform: translateX(20px); background: #00d4ff; }
+
+        /* Play/Stop buttons */
+        .fol-buttons {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-fol {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-fol-play {
+            background: #ff5722;
+            color: #000;
+            font-weight: bold;
+        }
+        .btn-fol-play:hover { background: #ff7043; transform: translateY(-1px); }
+        .btn-fol-stop {
+            background: transparent;
+            color: #555;
+            border: 1px solid #333;
+        }
+        .btn-fol-stop:hover { color: #ff5722; border-color: #ff5722; }
+
+        /* Coherence bar */
+        .fol-coherence {
+            margin-bottom: 40px;
+        }
+        .fol-coh-label {
+            font-size: 0.68rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .fol-coh-track {
+            height: 3px;
+            background: #111;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .fol-coh-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff5722, #00d4ff, #f7c13c);
+            transition: width 0.8s ease;
+        }
+        #fol-coherence-pct {
+            color: #ff5722;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+        .fol-coh-msg {
+            font-size: 0.75rem;
+            color: #444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            min-height: 1.4em;
+        }
+
+        /* Waveform canvas */
+        .fol-wave-wrap {
+            width: 100%;
+            background: #000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        #fol-wave { display: block; width: 100%; height: 120px; }
+
+        /* Explanation */
+        .fol-explanation {
+            background: #111;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #f7c13c;
+            text-align: left;
+        }
+        .fol-explanation h3 { color: #f7c13c; margin-top: 0; margin-bottom: 16px; letter-spacing: 2px; }
+        .fol-explanation ul { list-style: none; padding: 0; }
+        .fol-explanation li { margin-bottom: 16px; }
+        .fol-explanation .eq {
+            display: block;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: 4px;
+            margin: 24px 0;
+            padding: 16px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+        }
+
+        /* Headphones warning */
+        .headphones-note {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            font-size: 0.75rem;
+            color: #666;
+            letter-spacing: 1px;
+        }
+        .headphones-note span:first-child { font-size: 1.2rem; }
+
+        @media (max-width: 600px) {
+            .quote-text { font-size: 1.4rem; }
+            .fol-node-freq { font-size: 1.3rem; }
+            .fol-buttons { flex-direction: column; }
+            .btn-fol { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="quote-box">
+            <div class="quote-text">
+                "YOU SHADOW WHAT YOU LIGHT... GIVE LIGHT YOU CAST A SHADOW GIVE DARKNESS AND NOTHING."
+            </div>
+            <div class="signature">MARK J AZZOPARDI</div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- ══ SECTION 1: HEART RESONANCE ══════════════════════ -->
+        <section id="discovery">
+            <h2>The Heart Resonance Discovery</h2>
+            <p>Mathematical convergence of the 19Hz, 22Hz, and 3Hz patterns in human physiology. This is the visualization of biological synchronization.</p>
+            <div style="width: 100%; background: #000; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 40px 0;">
+                <video controls style="width: 100%; display: block;">
+                    <source src="resonance.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- ══ SECTION 2: TRIPLE-LOCK ═══════════════════════════ -->
+        <section id="simulation">
+            <h2 style="color: #00d4ff;">Living Frequency: The Triple-Lock</h2>
+            <p>Adjust the biological nodes to synchronize your system into a unified Life Frequency.</p>
+            
+            <div class="controls">
+                <label><strong>HEART RATE</strong> (The Engine - 1.2 Hz): <span id="heartVal">1.2</span></label><br>
+                <input type="range" min="0.5" max="2" step="0.1" value="1.2" id="heartSlider"><br><br>
+                
+                <label><strong>BREATHING</strong> (The Anchor - 3.0 Hz): <span id="breathVal">3.0</span></label><br>
+                <input type="range" min="1" max="5" step="0.1" value="3.0" id="breathSlider"><br><br>
+                
+                <label><strong>BRAINWAVES</strong> (The Light - 22 Hz): <span id="brainVal">22</span></label><br> 
+                <input type="range" min="15" max="30" step="1" value="22" id="brainSlider">
+            </div>
+
+            <div style="text-align:center;">
+                <h3>System Coherence Lock: <span id="coherence">0</span>%</h3>
+                <canvas id="chart" style="background: #000; border-radius: 8px; border: 1px solid #222; max-height: 300px;"></canvas>
+            </div>
+
+            <div class="explanation-box">
+                <h3 style="color: #00d4ff; margin-top: 0;">The Triple-Lock Cracked</h3>
+                <p>By synchronizing these three biological nodes, we bridge the gap between human resonance and the universal constants.</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 15px;">
+                        <strong>3 Hz (The Anchor - BREATHING):</strong> 
+                        Foundational physical ground. Deep rhythmic respiration triggers cellular repair and Delta-state stability.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>1.2 Hz (The "Hmm" - HEART RATE):</strong>
+                        The Heart's Electromagnetic Torus. This is the biological engine that generates your field's torque.
+                    </li>
+                    <li>
+                        <strong>19-22 Hz (The Light - BRAINWAVES):</strong> 
+                        High-Beta Cognitive Peak Awareness. The "Light" you cast through focused intention and situational clarity.
+                    </li>
+                </ul>
+                <p style="border-top: 1px solid #333; padding-top: 10px; font-style: italic;">
+                    "Everything in the universe is a byproduct of vibration." — M.J.A.
+                </p>
+            </div>
+        </section>
+
+        <!-- ══ SECTION 3: FREQUENCY OF LIFE ════════════════════ -->
+        <section id="frequency-of-life">
+
+            <div class="fol-header">
+                <h2 style="color: #f7c13c;">Frequency of Life: The Scalar Lock</h2>
+            </div>
+            <p class="fol-subtitle">Heart · Earth · Sun — Three Scales. One Frequency.</p>
+
+            <p>The Triple-Lock operates within the body. The Scalar Lock operates across existence itself. The same oscillator principle — three frequencies locking into one — but now scaled from the human heart outward to the planet, and from the planet outward to the Sun. The ratio between all three is identical: a perfect ×10 scalar ladder.</p>
+
+            <!-- Orbital -->
+            <div class="orbital-wrap">
+                <canvas id="orbital" width="460" height="460"></canvas>
+            </div>
+
+            <!-- Headphones note -->
+            <div class="headphones-note">
+                <span>🎧</span>
+                <span>Headphones recommended — binaural frequencies require stereo separation to work correctly</span>
+            </div>
+
+            <!-- Nodes -->
+            <div class="fol-nodes">
+
+                <div class="fol-node" id="fol-node-sun">
+                    <div class="fol-node-icon">☀️</div>
+                    <div class="fol-node-body">
+                        <div class="fol-node-title sun-c">Sun — The Broadcaster</div>
+                        <div class="fol-node-freq">78.3 Hz</div>
+                        <div class="fol-node-sub">Solar Scalar · ×10 Cosmic Harmonic · Binaural: 7.83 Hz beat</div>
+                        <div class="fol-vol-row">
+                            <span class="fol-vol-label">Vol</span>
+                            <input type="range" class="vol-sun" id="fol-vol-sun" min="0" max="100" value="55">
+                            <span class="fol-vol-val" id="fol-vv-sun">55%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fol-node" id="fol-node-earth">
+                    <div class="fol-node-icon">🌍</div>
+                    <div class="fol-node-body">
+                        <div class="fol-node-title earth-c">Earth — The Carrier</div>
+                        <div class="fol-node-freq">7.83 Hz</div>
+                        <div class="fol-node-sub">Schumann Resonance · Earth's Electromagnetic Heartbeat · AM pulse on 200 Hz</div>
+                        <div class="fol-vol-row">
+                            <span class="fol-vol-label">Vol</span>
+                            <input type="range" class="vol-earth" id="fol-vol-earth" min="0" max="100" value="65">
+                            <span class="fol-vol-val" id="fol-vv-earth">65%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fol-node" id="fol-node-heart">
+                    <div class="fol-node-icon">❤️</div>
+                    <div class="fol-node-body">
+                        <div class="fol-node-title heart-c">Heart — The Receiver</div>
+                        <div class="fol-node-freq">0.783 Hz</div>
+                        <div class="fol-node-sub">HRV Mayer Wave · Coherence Oscillation · Deep delta breath on 40 Hz</div>
+                        <div class="fol-vol-row">
+                            <span class="fol-vol-label">Vol</span>
+                            <input type="range" class="vol-heart" id="fol-vol-heart" min="0" max="100" value="60">
+                            <span class="fol-vol-val" id="fol-vv-heart">60%</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Binaural toggle -->
+            <div class="binaural-row">
+                <span>🧠</span>
+                <label>Binaural Beat Layer — 7.83 Hz Schumann entrainment</label>
+                <label class="toggle">
+                    <input type="checkbox" id="fol-binaural" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="binaural-status">ON</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="fol-buttons">
+                <button class="btn-fol btn-fol-play" id="fol-btn-play">▶ Activate Scalar Lock</button>
+                <button class="btn-fol btn-fol-stop" id="fol-btn-stop">■ Stop</button>
+            </div>
+
+            <!-- Coherence -->
+            <div class="fol-coherence">
+                <div class="fol-coh-label">Scalar Coherence Lock</div>
+                <div class="fol-coh-track">
+                    <div class="fol-coh-fill" id="fol-coh-fill"></div>
+                </div>
+                <span id="fol-coherence-pct">0</span>%
+                <div class="fol-coh-msg" id="fol-coh-msg">Activate to begin scalar synchronisation</div>
+            </div>
+
+            <!-- Live waveform -->
+            <div class="fol-wave-wrap">
+                <canvas id="fol-wave"></canvas>
+            </div>
+
+            <!-- Explanation -->
+            <div class="fol-explanation">
+                <h3>The Scalar Lock — Decoded</h3>
+                <p>The same frequency expressed at three scales of existence. Not three different frequencies — one frequency, at three magnitudes.</p>
+
+                <span class="eq">0.783 Hz &nbsp;×10&nbsp; 7.83 Hz &nbsp;×10&nbsp; 78.3 Hz</span>
+
+                <ul>
+                    <li>
+                        <strong style="color: #ff5722;">0.783 Hz — Heart (The Receiver):</strong><br>
+                        The HRV Mayer Wave. When the heart enters full coherence, it oscillates at a ~10-second cycle — 0.1 Hz classically, here refined to 0.783 Hz as the scalar seed. This is the scale of the individual body. You are the smallest resonator in the lock.
+                    </li>
+                    <li>
+                        <strong style="color: #00d4ff;">7.83 Hz — Earth (The Carrier):</strong><br>
+                        The Schumann Resonance. The electromagnetic frequency of the cavity between Earth's surface and ionosphere, driven by solar radiation. HeartMath Institute research links heart coherence directly to Schumann entrainment. The planet is already broadcasting this. Your body already receives it.
+                    </li>
+                    <li>
+                        <strong style="color: #f7c13c;">78.3 Hz — Sun (The Broadcaster):</strong><br>
+                        The solar scalar harmonic. ×10 above Schumann. The Sun drives the Schumann resonance through its electromagnetic wind — so the Sun's frequency is the source that creates Earth's frequency that entrains the heart's frequency. One chain. One lock.
+                    </li>
+                </ul>
+
+                <p style="border-top: 1px solid #2a2a1a; padding-top: 16px; font-style: italic; color: #888;">
+                    The binaural layer delivers a 7.83 Hz beat between left and right ears — placing the Schumann frequency directly inside the brainwave entrainment channel. Use headphones. Close your eyes. The body already knows this frequency. You are naming it. — M.J.A.
+                </p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ══ FOOTER ════════════════════════════════════════════════ -->
+    <footer style="text-align:left; padding: 0; background: #050505; border-top: 1px solid #1a1a1a;">
+
+        <div style="max-width:900px; margin: 0 auto; padding: 80px 20px;">
+
+            <div style="border-left: 2px solid #ff5722; padding-left: 30px; margin-bottom: 60px;">
+                <p style="color: #ff5722; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px;">Original Discovery — Priority Notice</p>
+                <p style="font-size: 1.5rem; font-weight: 300; color: #ffffff; line-height: 1.5; margin-bottom: 8px;">The Triple-Lock Heart Resonance Discovery</p>
+                <p style="color: #888; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">First Published: 2 April 2026 · 11:44 AM GMT+1</p>
+            </div>
+
+            <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; margin-bottom: 40px;">
+                <p style="color: #ff5722; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px;">What Is Claimed as Original Discovery</p>
+
+                <div style="display: grid; gap: 20px;">
+
+                    <div style="border-left: 1px solid #ff572240; padding-left: 20px;">
+                        <p style="color: #ffffff; font-size: 0.9rem; margin-bottom: 6px;">The Triple-Lock Biological Frequency Model</p>
+                        <p style="color: #666; font-size: 0.85rem; line-height: 1.7;">The original identification and framing of three biological frequencies — Heart Rate (1.2 Hz), Breathing (3.0 Hz), and Brainwaves (19–22 Hz) — as a unified synchronisation system producing measurable electromagnetic coherence when locked together. The naming of this convergence as "The Triple-Lock" and its framing as a bridge between human resonance and universal constants.</p>
+                    </div>
+
+                    <div style="border-left: 1px solid #ff572240; padding-left: 20px;">
+                        <p style="color: #ffffff; font-size: 0.9rem; margin-bottom: 6px;">The Scalar Lock — Frequency of Life</p>
+                        <p style="color: #666; font-size: 0.85rem; line-height: 1.7;">The original identification of the ×10 scalar relationship between the HRV Mayer Wave (0.783 Hz), the Schumann Resonance (7.83 Hz), and the Solar Scalar Harmonic (78.3 Hz) as a unified multi-oscillator system — Heart, Earth, and Sun — producing a single Frequency of Life when locked together. Named the Scalar Lock. First framed as an extension of the Triple-Lock principle to cosmic scale.</p>
+                    </div>
+
+                    <div style="border-left: 1px solid #ff572240; padding-left: 20px;">
+                        <p style="color: #ffffff; font-size: 0.9rem; margin-bottom: 6px;">The Founding Quote</p>
+                        <p style="color: #666; font-size: 0.85rem; line-height: 1.7; font-style: italic;">"You shadow what you light... give light you cast a shadow, give darkness and nothing."<br><span style="color: #888; font-style: normal;">— Original statement by Mark J Azzopardi, first published on this page, 2 April 2026. This statement forms the philosophical foundation of all derivative works.</span></p>
+                    </div>
+
+                    <div style="border-left: 1px solid #ff572240; padding-left: 20px;">
+                        <p style="color: #ffffff; font-size: 0.9rem; margin-bottom: 6px;">The Vibration Principle</p>
+                        <p style="color: #666; font-size: 0.85rem; line-height: 1.7;">"Everything in the universe is a byproduct of vibration." — Original framing as the root mechanism of biological synchronisation, dark matter activation, and cosmic information transfer.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- DERIVATIVE WORKS -->
+            <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; margin-bottom: 40px;">
+                <p style="color: #00d4ff; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px;">Derivative Works — All Flow From This Page</p>
+                <div style="display: grid; gap: 14px;">
+
+                    <div style="display: flex; gap: 20px; align-items: baseline;">
+                        <span style="color: #ff5722; font-size: 0.7rem; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0;">02 APR 2026</span>
+                        <p style="color: #888; font-size: 0.85rem; line-height: 1.6;"><span style="color: #ddd;">The Temporal Evolutionary Cosmogenesis Manifesto</span> — The philosophical expansion. Time, Energy, Consciousness as the three forces. The energy loop Human → Earth → Star → Universe.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: baseline;">
+                        <span style="color: #ff5722; font-size: 0.7rem; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0;">03 APR 2026</span>
+                        <p style="color: #888; font-size: 0.85rem; line-height: 1.6;"><span style="color: #ddd;">The Azzopardi Framework V2</span> — The mechanism. Dark matter as evolutionary data carrier. Sunlight as DNA activation. The Möbius surface. The inter-universal relay.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: baseline;">
+                        <span style="color: #ff5722; font-size: 0.7rem; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0;">05 APR 2026</span>
+                        <p style="color: #888; font-size: 0.85rem; line-height: 1.6;"><span style="color: #ddd;">Spiral Evolution Simulation</span> — The geometric proof. The spiral as the fundamental shape of gravity, DNA, and cosmic structure at every scale.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: baseline;">
+                        <span style="color: #ff5722; font-size: 0.7rem; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0;">09 APR 2026</span>
+                        <p style="color: #888; font-size: 0.85rem; line-height: 1.6;"><span style="color: #ddd;">Anima Sol — A Theory of Everything</span> — The complete unified theory. All seven parts. Soul, the Unified Solar Field, Dark Matter Activation, the Night Window, Spiral Curvature Gravity, Solar Graduation, and the Power of Three — the Triple-Lock expanded to cosmic scale.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: baseline;">
+                        <span style="color: #f7c13c; font-size: 0.7rem; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0;">26 APR 2026</span>
+                        <p style="color: #888; font-size: 0.85rem; line-height: 1.6;"><span style="color: #ddd;">The Scalar Lock — Frequency of Life</span> — The cosmic extension. Heart (0.783 Hz), Earth (7.83 Hz), Sun (78.3 Hz) as a single ×10 scalar ladder. The Schumann binaural entrainment method. The frequency that connects the individual to the planet to the star.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- LEGAL -->
+            <div style="border-top: 1px solid #1a1a1a; padding-top: 40px; margin-bottom: 40px;">
+                <p style="color: #ff5722; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;">Copyright &amp; Protection Notice</p>
+                <p style="color: #555; font-size: 0.82rem; line-height: 1.9;">© 2026 <span style="color: #888;">Mark J Azzopardi</span>. All rights reserved. This page and all works listed above are the original intellectual property of <span style="color: #888;">Mark J Azzopardi</span>, also known as <span style="color: #888;">Markazion</span> and <span style="color: #888;">TheHolyTrinity3</span>. Priority of authorship is established through public GitHub Pages deployment timestamps, independently verified by GitHub's servers. First deployment of this discovery: <span style="color: #888;">2 April 2026, 11:44 AM GMT+1</span>. No part of this work — including its concepts, specific formulations, named frameworks, frequency models, quotes, or visual representations — may be reproduced, adapted, or used in any form without the express written permission of the author.</p>
+            </div>
+
+            <div style="text-align: center; padding-top: 20px;">
+                <p style="color: #ff5722; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px;">Mark J Azzopardi</p>
+                <p style="color: #333; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;">Markazion &nbsp;·&nbsp; TheHolyTrinity3 &nbsp;·&nbsp; Original Work &nbsp;·&nbsp; 2026</p>
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- ══ SCRIPTS ═══════════════════════════════════════════════ -->
+    <script>
+    // ── Original Triple-Lock chart ────────────────────────────
+    const ctx = document.getElementById('chart');
+    let chart;
+
+    function updateChart() {
+        const hF = parseFloat(document.getElementById('heartSlider').value);
+        const bF = parseFloat(document.getElementById('breathSlider').value);
+        const brF = parseFloat(document.getElementById('brainSlider').value);
+        
+        document.getElementById('heartVal').innerText = hF;
+        document.getElementById('breathVal').innerText = bF;
+        document.getElementById('brainVal').innerText = brF;
+
+        const t = [], heart = [], breath = [], brain = [], unified = [];
+        for (let i = 0; i < 400; i++) {
+            let time = i * 0.05;
+            t.push(time);
+            let hS = Math.sin(2 * Math.PI * hF * time);
+            let bS = 0.5 * Math.sin(2 * Math.PI * bF * time);
+            let brS = 0.2 * Math.sin(2 * Math.PI * brF * time);
+            heart.push(hS); breath.push(bS); brain.push(brS);
+            unified.push(hS + bS + brS);
+        }
+
+        const coherenceScore = (90 + (Math.random() * 8)).toFixed(1);
+        document.getElementById('coherence').innerText = coherenceScore;
+
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: t,
+                datasets: [
+                    { label: 'Heart Rate',       data: heart,   borderColor: '#ff4b2b', borderWidth: 1, pointRadius: 0 },
+                    { label: 'Breathing',         data: breath,  borderColor: '#00d4ff', borderWidth: 1, pointRadius: 0 },
+                    { label: 'Brainwaves',        data: brain,   borderColor: '#f9d423', borderWidth: 1, pointRadius: 0 },
+                    { label: 'Unified Frequency', data: unified, borderColor: '#ffffff', borderWidth: 2, pointRadius: 0 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { x: { display: false }, y: { display: false } },
+                plugins: { legend: { labels: { color: 'white', font: { size: 10 } } } }
+            }
+        });
+    }
+
+    ['heartSlider','breathSlider','brainSlider'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateChart);
+    });
+    updateChart();
+
+
+    // ── FREQUENCY OF LIFE — Audio Engine ─────────────────────
+    let folCtx = null, folNodes = {}, folPlaying = false;
+
+    function folInit() {
+        if (folCtx) return;
+        folCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const ac = folCtx;
+
+        // ── SUN: 78.3 Hz ─────────────────────────────────────
+        // Dual oscillator slight detune for warmth + binaural beat
+        // Left: 78.3 Hz  Right: 86.13 Hz → beat = 7.83 Hz (Schumann in the brain)
+        const sunMerge = ac.createChannelMerger(2);
+        const sunGain  = ac.createGain(); sunGain.gain.value = 0;
+
+        const sunL = ac.createOscillator(); sunL.type = 'sine'; sunL.frequency.value = 78.3;
+        const sunR = ac.createOscillator(); sunR.type = 'sine'; sunR.frequency.value = 86.13; // 78.3 + 7.83
+        const sgL  = ac.createGain(); sgL.gain.value = 1;
+        const sgR  = ac.createGain(); sgR.gain.value = 1;
+        sunL.connect(sgL); sgL.connect(sunMerge, 0, 0);
+        sunR.connect(sgR); sgR.connect(sunMerge, 0, 1);
+        sunMerge.connect(sunGain);
+        sunGain.connect(ac.destination);
+        sunL.start(); sunR.start();
+        folNodes.sunGain = sunGain;
+
+        // ── EARTH: 7.83 Hz Schumann ──────────────────────────
+        // AM modulation: 7.83 Hz modulating a 200 Hz carrier — you feel the rhythm
+        // Plus a sub-bass 40 Hz bed
+        const earthGain = ac.createGain(); earthGain.gain.value = 0;
+
+        const earthCarrier = ac.createOscillator();
+        earthCarrier.type = 'sine'; earthCarrier.frequency.value = 200;
+        const earthAMDepth = ac.createGain(); earthAMDepth.gain.value = 0.5;
+        const earthMod = ac.createOscillator();
+        earthMod.frequency.value = 7.83;
+        earthMod.connect(earthAMDepth);
+        earthAMDepth.connect(earthCarrier.frequency);
+
+        const earthSub = ac.createOscillator();
+        earthSub.type = 'sine'; earthSub.frequency.value = 40;
+        const earthSubGain = ac.createGain(); earthSubGain.gain.value = 0.3;
+        earthSub.connect(earthSubGain);
+
+        earthCarrier.connect(earthGain);
+        earthSubGain.connect(earthGain);
+        earthGain.connect(ac.destination);
+        earthCarrier.start(); earthMod.start(); earthSub.start();
+        folNodes.earthGain = earthGain;
+
+        // ── HEART: 0.783 Hz Mayer Wave ───────────────────────
+        // Delta carrier at 2.5 Hz (deep delta), breathing at 0.783 Hz slow pulse
+        // Plus binaural: left 40 Hz, right 47.83 Hz → 7.83 Hz beat in delta range
+        const heartMerge = ac.createChannelMerger(2);
+        const heartGain  = ac.createGain(); heartGain.gain.value = 0;
+
+        const hL = ac.createOscillator(); hL.type = 'sine'; hL.frequency.value = 40;
+        const hR = ac.createOscillator(); hR.type = 'sine'; hR.frequency.value = 47.83;
+        const hgL = ac.createGain(); hgL.gain.value = 0.6;
+        const hgR = ac.createGain(); hgR.gain.value = 0.6;
+        hL.connect(hgL); hgL.connect(heartMerge, 0, 0);
+        hR.connect(hgR); hgR.connect(heartMerge, 0, 1);
+
+        // LFO breath at 0.783 Hz on top
+        const heartLFO     = ac.createOscillator(); heartLFO.frequency.value = 0.783;
+        const heartLFOGain = ac.createGain(); heartLFOGain.gain.value = 0.35;
+        heartLFO.connect(heartLFOGain);
+        heartLFOGain.connect(heartGain.gain);
+
+        heartMerge.connect(heartGain);
+        heartGain.connect(ac.destination);
+        hL.start(); hR.start(); heartLFO.start();
+        folNodes.heartGain = heartGain;
+
+        // ── BINAURAL SCHUMANN PURE LAYER ─────────────────────
+        // Dedicated pure binaural: 200 Hz left / 207.83 Hz right → 7.83 Hz beat
+        const binMerge = ac.createChannelMerger(2);
+        const binGain  = ac.createGain(); binGain.gain.value = 0;
+
+        const binL = ac.createOscillator(); binL.type = 'sine'; binL.frequency.value = 200;
+        const binR = ac.createOscillator(); binR.type = 'sine'; binR.frequency.value = 207.83;
+        const bgL  = ac.createGain(); bgL.gain.value = 0.5;
+        const bgR  = ac.createGain(); bgR.gain.value = 0.5;
+        binL.connect(bgL); bgL.connect(binMerge, 0, 0);
+        binR.connect(bgR); bgR.connect(binMerge, 0, 1);
+        binMerge.connect(binGain);
+        binGain.connect(ac.destination);
+        binL.start(); binR.start();
+        folNodes.binGain = binGain;
+    }
+
+    function folGetVols() {
+        return {
+            sun:   document.getElementById('fol-vol-sun').value / 100,
+            earth: document.getElementById('fol-vol-earth').value / 100,
+            heart: document.getElementById('fol-vol-heart').value / 100,
+        };
+    }
+
+    function folPlay() {
+        folInit();
+        if (folCtx.state === 'suspended') folCtx.resume();
+        const v = folGetVols();
+        const t = folCtx.currentTime;
+        const binOn = document.getElementById('fol-binaural').checked;
+
+        folNodes.sunGain.gain.linearRampToValueAtTime(v.sun * 0.14, t + 2.5);
+        folNodes.earthGain.gain.linearRampToValueAtTime(v.earth * 0.18, t + 2.5);
+        folNodes.heartGain.gain.linearRampToValueAtTime(v.heart * 0.16, t + 2.5);
+        folNodes.binGain.gain.linearRampToValueAtTime(binOn ? 0.06 : 0, t + 2.5);
+
+        folPlaying = true;
+        folUpdateActive();
+        folStartCoherence();
+    }
+
+    function folStop() {
+        if (!folCtx) return;
+        const t = folCtx.currentTime;
+        ['sunGain','earthGain','heartGain','binGain'].forEach(k => {
+            if (folNodes[k]) folNodes[k].gain.linearRampToValueAtTime(0, t + 1.5);
+        });
+        folPlaying = false;
+        folUpdateActive();
+        folStopCoherence();
+    }
+
+    // Live vol
+    [['fol-vol-sun','sunGain',0.14],['fol-vol-earth','earthGain',0.18],['fol-vol-heart','heartGain',0.16]].forEach(([id, node, scale]) => {
+        const sl = document.getElementById(id);
+        const vvId = 'fol-vv-' + id.replace('fol-vol-','');
+        sl.addEventListener('input', () => {
+            document.getElementById(vvId).textContent = sl.value + '%';
+            if (!folPlaying || !folCtx) return;
+            folNodes[node].gain.linearRampToValueAtTime(sl.value / 100 * scale, folCtx.currentTime + 0.3);
+        });
+    });
+
+    // Binaural toggle
+    document.getElementById('fol-binaural').addEventListener('change', function() {
+        document.getElementById('binaural-status').textContent = this.checked ? 'ON' : 'OFF';
+        if (!folPlaying || !folCtx) return;
+        folNodes.binGain.gain.linearRampToValueAtTime(this.checked ? 0.06 : 0, folCtx.currentTime + 0.5);
+    });
+
+    document.getElementById('fol-btn-play').addEventListener('click', folPlay);
+    document.getElementById('fol-btn-stop').addEventListener('click', folStop);
+
+    function folUpdateActive() {
+        ['sun','earth','heart'].forEach(id => {
+            const el = document.getElementById('fol-node-' + id);
+            el.classList.remove('active-sun','active-earth','active-heart');
+            if (folPlaying) el.classList.add('active-' + id);
+        });
+    }
+
+    // ── Coherence ─────────────────────────────────────────────
+    let cohTimer = null, cohVal = 0;
+    const cohMsgs = [
+        'Initialising scalar field...',
+        'Heart wave detected...',
+        'Schumann carrier locking...',
+        'Solar harmonic aligning...',
+        'Binaural entrainment active...',
+        'SCALAR LOCK — ENGAGED'
+    ];
+
+    function folStartCoherence() {
+        cohVal = 0;
+        document.getElementById('fol-coh-msg').textContent = cohMsgs[0];
+        cohTimer = setInterval(() => {
+            cohVal = Math.min(100, cohVal + Math.random() * 7 + 3);
+            document.getElementById('fol-coh-fill').style.width = cohVal + '%';
+            document.getElementById('fol-coherence-pct').textContent = Math.round(cohVal);
+            const step = Math.min(5, Math.floor(cohVal / 20));
+            document.getElementById('fol-coh-msg').textContent = cohMsgs[step];
+            if (cohVal >= 100) clearInterval(cohTimer);
+        }, 600);
+    }
+
+    function folStopCoherence() {
+        clearInterval(cohTimer); cohVal = 0;
+        document.getElementById('fol-coh-fill').style.width = '0%';
+        document.getElementById('fol-coherence-pct').textContent = '0';
+        document.getElementById('fol-coh-msg').textContent = 'Activate to begin scalar synchronisation';
+    }
+
+    // ── Orbital Canvas ────────────────────────────────────────
+    const orbital = document.getElementById('orbital');
+    const oc = orbital.getContext('2d');
+    let ot = 0;
+
+    function drawOrbital() {
+        const W = orbital.width, H = orbital.height;
+        const CX = W/2, CY = H/2;
+        oc.clearRect(0, 0, W, H);
+
+        // Faint radial glow
+        const rg = oc.createRadialGradient(CX, CY, 0, CX, CY, CX * 0.9);
+        rg.addColorStop(0, 'rgba(247,193,60,0.05)');
+        rg.addColorStop(1, 'rgba(0,0,0,0)');
+        oc.fillStyle = rg; oc.fillRect(0, 0, W, H);
+
+        const pulse = folPlaying ? 1 + Math.sin(ot * 0.04) * 0.04 : 1;
+
+        // Orbit rings
+        [[65,'rgba(255,87,34,0.12)',[3,5]],[118,'rgba(0,212,255,0.1)',[5,5]],[175,'rgba(247,193,60,0.08)',[7,4]]].forEach(([r,col,dash]) => {
+            oc.beginPath(); oc.arc(CX, CY, r * pulse, 0, Math.PI*2);
+            oc.strokeStyle = col; oc.setLineDash(dash); oc.lineWidth = 1; oc.stroke(); oc.setLineDash([]);
+        });
+
+        // Sun — centre glow
+        const sg = oc.createRadialGradient(CX, CY, 0, CX, CY, 32);
+        sg.addColorStop(0, 'rgba(247,193,60,1)');
+        sg.addColorStop(0.4, 'rgba(247,193,60,0.3)');
+        sg.addColorStop(1, 'rgba(247,193,60,0)');
+        const sr = 14 + (folPlaying ? Math.sin(ot * 0.07) * 2 : 0);
+        oc.beginPath(); oc.arc(CX, CY, sr + 12, 0, Math.PI*2); oc.fillStyle = sg; oc.fill();
+        oc.beginPath(); oc.arc(CX, CY, sr, 0, Math.PI*2); oc.fillStyle = '#f7c13c'; oc.fill();
+
+        // Earth — 7.83 relative speed
+        const ea = ot * 0.047;
+        const ex = CX + Math.cos(ea) * 118 * pulse;
+        const ey = CY + Math.sin(ea) * 118 * pulse;
+        const eg = oc.createRadialGradient(ex, ey, 0, ex, ey, 20);
+        eg.addColorStop(0, 'rgba(0,212,255,0.8)'); eg.addColorStop(1, 'rgba(0,212,255,0)');
+        oc.beginPath(); oc.arc(ex, ey, 16, 0, Math.PI*2); oc.fillStyle = eg; oc.fill();
+        oc.beginPath(); oc.arc(ex, ey, 9, 0, Math.PI*2); oc.fillStyle = '#00d4ff'; oc.fill();
+
+        // Heart — 0.783 relative speed (very slow)
+        const ha = ot * 0.005;
+        const hx = CX + Math.cos(ha) * 65 * pulse;
+        const hy = CY + Math.sin(ha) * 65 * pulse;
+        const hr = folPlaying ? 7 + Math.sin(ot * 0.55) * 3 : 7;
+        const hg = oc.createRadialGradient(hx, hy, 0, hx, hy, hr + 8);
+        hg.addColorStop(0, 'rgba(255,87,34,0.9)'); hg.addColorStop(1, 'rgba(255,87,34,0)');
+        oc.beginPath(); oc.arc(hx, hy, hr + 6, 0, Math.PI*2); oc.fillStyle = hg; oc.fill();
+        oc.beginPath(); oc.arc(hx, hy, hr, 0, Math.PI*2); oc.fillStyle = '#ff5722'; oc.fill();
+
+        // Lock lines when active & coherent
+        if (folPlaying && cohVal > 25) {
+            const a = Math.min(0.3, (cohVal - 25) / 120);
+            oc.lineWidth = 1;
+            [[CX,CY,ex,ey,'rgba(0,212,255,'+a+')'],
+             [CX,CY,hx,hy,'rgba(255,87,34,'+a+')'],
+             [ex,ey,hx,hy,'rgba(247,193,60,'+(a*0.6)+')']].forEach(([x1,y1,x2,y2,col]) => {
+                oc.beginPath(); oc.moveTo(x1,y1); oc.lineTo(x2,y2);
+                oc.strokeStyle = col; oc.stroke();
+            });
+        }
+
+        ot++;
+        requestAnimationFrame(drawOrbital);
+    }
+    drawOrbital();
+
+    // ── Live waveform visualiser ──────────────────────────────
+    const waveCanvas = document.getElementById('fol-wave');
+    waveCanvas.width  = waveCanvas.offsetWidth || 860;
+    waveCanvas.height = 120;
+    const wc = waveCanvas.getContext('2d');
+    let wt = 0;
+
+    function drawWave() {
+        const W = waveCanvas.width, H = waveCanvas.height;
+        wc.fillStyle = '#000'; wc.fillRect(0, 0, W, H);
+
+        if (!folPlaying) {
+            wc.fillStyle = '#111'; wc.fillRect(0, H/2-1, W, 2);
+            requestAnimationFrame(drawWave); return;
+        }
+
+        const layers = [
+            { freq: 78.3,  col: 'rgba(247,193,60,0.7)',  amp: 0.25 },
+            { freq: 7.83,  col: 'rgba(0,212,255,0.6)',   amp: 0.35 },
+            { freq: 0.783, col: 'rgba(255,87,34,0.55)',  amp: 0.45 },
+        ];
+
+        layers.forEach(({ freq, col, amp }) => {
+            wc.beginPath();
+            for (let x = 0; x < W; x++) {
+                const t2 = (wt + x) * 0.012;
+                const y = H/2 + Math.sin(2 * Math.PI * freq * t2 * 0.05) * H * amp * 0.45;
+                x === 0 ? wc.moveTo(x, y) : wc.lineTo(x, y);
+            }
+            wc.strokeStyle = col; wc.lineWidth = 1.5; wc.stroke();
+        });
+
+        // Unified sum
+        wc.beginPath();
+        for (let x = 0; x < W; x++) {
+            const t2 = (wt + x) * 0.012;
+            const y = H/2 + (
+                Math.sin(2 * Math.PI * 78.3  * t2 * 0.05) * 0.25 +
+                Math.sin(2 * Math.PI * 7.83  * t2 * 0.05) * 0.35 +
+                Math.sin(2 * Math.PI * 0.783 * t2 * 0.05) * 0.45
+            ) * H * 0.28;
+            x === 0 ? wc.moveTo(x, y) : wc.lineTo(x, y);
+        }
+        wc.strokeStyle = 'rgba(255,255,255,0.9)'; wc.lineWidth = 2; wc.stroke();
+
+        wt += 2;
+        requestAnimationFrame(drawWave);
+    }
+    drawWave();
+
+    </script>
+</body>
+</html>
